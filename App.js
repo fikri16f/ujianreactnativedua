@@ -71,16 +71,18 @@ renderItem = ({ item }) => (
     <Text style={styles.title}>Email : {item.email}</Text>
     <Text style={styles.title}>No Hp : {item.hp}</Text>
     <Text style={styles.title}>Alamat : {item.alamat}</Text>
-    <Button onPress={()=>{this.props.navigation.navigate("UpdateData",item)}} title="Edit">
+    <View>
+    <TouchableOpacity style={styles.button} onPress={()=>{this.props.navigation.navigate("UpdateData",item)}} title="Edit">
       <Text>Update</Text>
-    </Button>
-    <Button onPress={()=>{Alert.alert('Hapus Data',
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.button} onPress={()=>{Alert.alert('Hapus Data',
               'Yakin Hapus Data?',[
                 {text: 'TIDAK', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
                 {text: 'YA', onPress: () => this.deleteData(item.id)},
-              ])}}  title="Hapus" color="Red">
+              ])}}  title="Hapus">
                 <Text>Hapus</Text>
-              </Button>
+              </TouchableOpacity>
+              </View>
   </View>
 )
 
@@ -89,22 +91,18 @@ renderItem = ({ item }) => (
       <Container>
         <SafeAreaView style={styles.container}>
         <Header>
-          <Left>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Left>
+          <Right>
+              <TouchableOpacity onPress={this.getData.bind(this)} style={styles.button}>
+              <Text>Cari</Text>
+              </TouchableOpacity>
+          </Right>
           <Body>
-              <Text>Menu</Text>
+          <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
           </Body>
           <Right />
         </Header>
 
         <Content>
-        <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
-              <TouchableOpacity onPress={this.getData.bind(this)} style={styles.button}>
-              <Text>Cari</Text>
-              </TouchableOpacity>
         <FlatList
                 data={this.state.data}
                 renderItem={this.renderItem}
@@ -113,9 +111,14 @@ renderItem = ({ item }) => (
         </Content>
         <Footer>
           <FooterTab>
+            
             <Button onPress={() =>{this.props.navigation.navigate("Add")}}>
               <Text>Register</Text>
             </Button>
+            <Button onPress={() =>{this.props.navigation.navigate("App")}}>
+              <Text>List</Text>
+            </Button>
+            
           </FooterTab>
         </Footer>
               {/* <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
