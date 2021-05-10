@@ -18,7 +18,7 @@ export default class UpdateData extends Component {
     }
     handleUpdate (){
 
-        axios.post(`http://192.168.26.3:8080/user/ubah/${this.state.id}`,this.state)
+        axios.put(`http://192.168.26.3:8080/user/ubah/${this.state.id}`,this.state)
         .then( (response) => {
           //console.log(response.data)
           alert(response.data)
