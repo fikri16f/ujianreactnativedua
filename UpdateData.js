@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View,StyleSheet, Text,  TouchableOpacity, TextInput } from 'react-native';
 import axios from 'axios'
-import { parse } from '@babel/core';
+
 
 export default class UpdateData extends Component {
 
@@ -42,7 +42,7 @@ export default class UpdateData extends Component {
           <TextInput placeholder="No. HP" value={this.state.hp} onChangeText={(data)=>{this.setState({hp:data})}}/>
           <Text style={styles.title}> Alamat </Text>
           <TextInput placeholder="Alamat" value={this.state.alamat} onChangeText={(data)=>{this.setState({alamat:data})}}/>
-          <TouchableOpacity style={styles.button} onPress={this.handleAdd.bind(this)}><Text style={styles.title}>Simpan</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={this.handleUpdate.bind(this)}><Text style={styles.title}>Update</Text></TouchableOpacity>
              </View>
         )
     }

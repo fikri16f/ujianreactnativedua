@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dropdown, SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import {Dropdown, SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 // import TableView from 'react-native-tableview'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon } from 'native-base';
 import axios from 'axios'
@@ -50,7 +50,7 @@ deleteData(id) {
 }
 
 renderItem = ({ item }) => (
-  <View style={styles.alternativeLayoutButtonContainer}>
+  <View  style={{borderWidth:5}}>
     {/* npm install react-native-tableview --save */}
       {/* <DataTable>
     <DataTable.Header>
@@ -71,12 +71,16 @@ renderItem = ({ item }) => (
     <Text style={styles.title}>Email : {item.email}</Text>
     <Text style={styles.title}>No Hp : {item.hp}</Text>
     <Text style={styles.title}>Alamat : {item.alamat}</Text>
-    <Button onPress={()=>{this.props.navigation.navigate("UpdateData",item)}} title="Edit"/>
+    <Button onPress={()=>{this.props.navigation.navigate("UpdateData",item)}} title="Edit">
+      <Text>Update</Text>
+    </Button>
     <Button onPress={()=>{Alert.alert('Hapus Data',
               'Yakin Hapus Data?',[
                 {text: 'TIDAK', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
                 {text: 'YA', onPress: () => this.deleteData(item.id)},
-              ])}}  title="Hapus" color="Red"/>
+              ])}}  title="Hapus" color="Red">
+                <Text>Hapus</Text>
+              </Button>
   </View>
 )
 
