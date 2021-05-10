@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Dropdown, SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 // import TableView from 'react-native-tableview'
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon } from 'native-base';
 import axios from 'axios'
+// npm install --save native-base
 
 export default class App extends Component {
   constructor(props) {
@@ -35,8 +37,20 @@ console.log(error);
 })
 }
 
+deleteData(id) {
+  axios.delete(`http://192.168.26.3:8080/user/hapus/${id}`)
+  .then( (response) => {
+    //console.log(response.data)
+   alert(response.data)
+  })
+  .catch(function (error) {
+  // handle error
+   console.log(error);
+  })
+}
+
 renderItem = ({ item }) => (
-  <View style = {{borderWidth:8}}>
+  <View style={styles.alternativeLayoutButtonContainer}>
     {/* npm install react-native-tableview --save */}
       {/* <DataTable>
     <DataTable.Header>
@@ -57,15 +71,50 @@ renderItem = ({ item }) => (
     <Text style={styles.title}>Email : {item.email}</Text>
     <Text style={styles.title}>No Hp : {item.hp}</Text>
     <Text style={styles.title}>Alamat : {item.alamat}</Text>
-
+    <Button onPress={()=>{this.props.navigation.navigate("UpdateData",item)}} title="Edit"/>
+    <Button onPress={()=>{Alert.alert('Hapus Data',
+              'Yakin Hapus Data?',[
+                {text: 'TIDAK', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
+                {text: 'YA', onPress: () => this.deleteData(item.id)},
+              ])}}  title="Hapus" color="Red"/>
   </View>
 )
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        
-              <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
+      <Container>
+        <SafeAreaView style={styles.container}>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+              <Text>Menu</Text>
+          </Body>
+          <Right />
+        </Header>
+
+        <Content>
+        <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
+              <TouchableOpacity onPress={this.getData.bind(this)} style={styles.button}>
+              <Text>Cari</Text>
+              </TouchableOpacity>
+        <FlatList
+                data={this.state.data}
+                renderItem={this.renderItem}
+                keyExtractor={item => item.id}
+              />
+        </Content>
+        <Footer>
+          <FooterTab>
+            <Button onPress={() =>{this.props.navigation.navigate("Add")}}>
+              <Text>Register</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+              {/* <TextInput placeholder="Cari" onChangeText={(data)=>{this.setState({nama:data})}}/>
               <TouchableOpacity onPress={this.getData.bind(this)} style={styles.button}>
               <Text>Cari</Text>
               </TouchableOpacity>
@@ -79,8 +128,10 @@ renderItem = ({ item }) => (
                 data={this.state.data}
                 renderItem={this.renderItem}
                 keyExtractor={item => item.id}
-              />
+              /> */}
             </SafeAreaView>
+
+            </Container>
     )
   }
 }
@@ -108,6 +159,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal:10,
     marginVertical:10
+  },
+  alternativeLayoutButtonContainer: {
+    margin: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  buttonContainer: {
+    margin: 20
   }
 
 });
